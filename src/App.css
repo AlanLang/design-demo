@@ -1,0 +1,53 @@
+h1,
+p {
+  font-family: Lato;
+}
+body {
+  margin: 0px;
+}
+.design {
+  width: 100vw;
+  height: 800px;
+  display: flex;
+}
+
+.widget-list {
+  width: 200px;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 24px;
+}
+
+.widget-item {
+  display: block;
+  height: 100px;
+  width: 100px;
+  border: 1px solid black;
+  margin-top: 12px;
+  cursor: move;
+  user-select: none;
+}
+
+.canvas-container {
+  margin-left: 18px;
+  flex: auto;
+  border: 1px solid black;
+  user-select: none;
+  overflow: overlay;
+}
+
+.widget-layout {
+  display: grid;
+  height: 200px;
+  grid-column-gap: 20px;
+  grid-template-columns: repeat(2, 1fr);
+}
+.widget-layout .widget {
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #efefef;
+}
