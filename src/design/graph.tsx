@@ -6,13 +6,14 @@ const EVENT_KEYS = {
   CLICK: "click",
   DRAG: "drag",
   DRAGEND: "dragEnd",
-};
+  HOVER: "hover",
+} as const;
 
 export class Graph {
   private container: HTMLDivElement;
   private events: EventEmitter;
 
-  private mouseDownPosition: [number, number] | null = null;
+  private mouseDownPosition: { x: number; y: number } | null = null;
 
   public constructor(container: HTMLDivElement) {
     this.container = container;
@@ -21,55 +22,54 @@ export class Graph {
   }
 
   public addEventListener() {
-    this.container.addEventListener("mousemove", this.onMouseMove.bind(this));
-    this.container.addEventListener("mousedown", this.onMouseDown.bind(this));
-    this.container.addEventListener("mouseup", this.onMouseUp.bind(this));
-    this.container.addEventListener("mouseout", this.onMouseOut.bind(this));
+    this.container.addEventListener("mousemove", this.onMouseMove);
+    this.container.addEventListener("mousedown", this.onMouseDown);
+    this.container.addEventListener("mouseup", this.onMouseUp);
+    this.container.addEventListener("mouseleave", this.onMouseOut);
   }
 
   public on(
     event: $Values<typeof EVENT_KEYS>,
-    listener: (e: MouseEvent) => void
+    listener: (e: MouseEvent, start: { x: number; y: number }) => void
   ) {
     this.events.on(event, listener);
   }
 
   public destroy() {
-    this.container.removeEventListener(
-      "mousemove",
-      this.onMouseMove.bind(this)
-    );
-    this.container.removeEventListener(
-      "mousedown",
-      this.onMouseDown.bind(this)
-    );
-    this.container.removeEventListener("mouseup", this.onMouseUp.bind(this));
-    this.container.removeEventListener("mouseout", this.onMouseOut.bind(this));
+    this.container.removeEventListener("mousemove", this.onMouseMove);
+    this.container.removeEventListener("mousedown", this.onMouseDown);
+    this.container.removeEventListener("mouseup", this.onMouseUp);
+    this.container.removeEventListener("mouseleave", this.onMouseOut);
     this.events.removeAllListeners();
   }
 
   private onMouseDown = (e: MouseEvent) => {
-    this.mouseDownPosition = [e.x, e.y];
+    this.mouseDownPosition = e;
   };
 
   private onMouseMove = (e: MouseEvent) => {
-    this.events.emit(EVENT_KEYS.DRAG, e);
+    if (e.buttons > 0 && this.mouseDownPosition) {
+      this.events.emit(EVENT_KEYS.DRAG, e, this.mouseDownPosition);
+    } else {
+      this.events.emit(EVENT_KEYS.HOVER, e);
+    }
   };
 
   private onMouseUp = (e: MouseEvent) => {
     if (
       this.mouseDownPosition &&
-      this.mouseDownPosition[0] === e.x &&
-      this.mouseDownPosition[1] === e.y
+      Math.abs(this.mouseDownPosition.x - e.x) < 5 &&
+      Math.abs(this.mouseDownPosition.y - e.y) < 5
     ) {
       this.events.emit(EVENT_KEYS.CLICK, e);
     } else {
-      this.events.emit(EVENT_KEYS.DRAGEND, e);
+      this.events.emit(EVENT_KEYS.DRAGEND, e, this.mouseDownPosition);
     }
     this.mouseDownPosition = null;
   };
 
-  private onMouseOut = () => {
-    this.mouseDownPosition = null;
+  private onMouseOut = (e: MouseEvent) => {
+    this.onMouseMove(e);
+    // this.mouseDownPosition = null;
   };
 }

@@ -1,5 +1,5 @@
 export interface Widget {
-  id: string;
+  payload: any;
   resizable?: "horizontal" | "vertical" | "both" | "none";
   position: {
     x: number;

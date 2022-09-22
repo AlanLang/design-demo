@@ -1,7 +1,7 @@
 export function Text({ id }: { id: string }) {
   return (
     <span className="widget" id={id}>
-      这是一段文字
+      这是一段文字{id}
     </span>
   );
 }
@@ -9,17 +9,24 @@ export function Text({ id }: { id: string }) {
 export function Title({ id }: { id: string }) {
   return (
     <div className="widget" id={id}>
-      这是一个标题，占满整行
+      这是一个标题，占满整行{id}
     </div>
   );
 }
 
-export function Layout({ id }: { id: string }) {
+export function Layout({ widget }: { widget: Widget }) {
   return (
-    <div className="widget" id={id}>
-      <div className="widget-layout" style={{ margin: 20 }}>
-        <div className="widget">占位块1</div>
-        <div className="widget">占位块2</div>
+    <div className="widget" id={widget.id} style={{ padding: 20 }}>
+      <div className="widget-layout">
+        {widget.children?.map((item, index) => (
+          <div key={item.id} className="widget layout" id={item.id}>
+            {item.children ? (
+              <RenderWidgets widgets={item.children} />
+            ) : (
+              `占位块${index + 1}`
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -35,14 +42,14 @@ export function RenderWidgets({ widgets }: { widgets: Widget[] }) {
           case "title":
             return <Title key={index} id={widget.id} />;
           case "layout":
-            return <Layout key={index} id={widget.id} />;
+            return <Layout key={index} widget={widget} />;
         }
       })}
     </>
   );
 }
 
-export function getIdsPosition(p: { x: number; y: number }) {
+export function getInfoByPosition(p: { x: number; y: number }) {
   const doms = document.getElementsByClassName("widget");
   const domIds = Array.from(doms)
     .filter((item) => {
@@ -67,7 +74,32 @@ export function getIdsPosition(p: { x: number; y: number }) {
       }
     }
   });
-  return domIds;
+  const targetDom = document.getElementById(targetId);
+  if (targetDom && targetDom.classList.contains("layout")) {
+    return {
+      payload: targetId,
+      position: targetDom.getBoundingClientRect(),
+      children: Array.from(targetDom.children).map((item) => {
+        return {
+          payload: item.id,
+          position: item.getBoundingClientRect(),
+        };
+      }),
+    };
+  }
+  const parent = targetDom?.parentElement;
+  if (parent) {
+    return {
+      payload: parent.id,
+      position: parent.getBoundingClientRect(),
+      children: Array.from(parent.children).map((item) => {
+        return {
+          payload: item.id,
+          position: item.getBoundingClientRect(),
+        };
+      }),
+    };
+  }
 }
 
 export interface Widget {
