@@ -20,7 +20,7 @@ export function Layout({ widget }: { widget: Widget }) {
       <div className="widget-layout">
         {widget.children?.map((item, index) => (
           <div key={item.id} className="widget layout" id={item.id}>
-            {item.children ? (
+            {item.children && item.children.length > 0 ? (
               <RenderWidgets widgets={item.children} />
             ) : (
               `占位块${index + 1}`

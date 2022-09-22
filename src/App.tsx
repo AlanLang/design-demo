@@ -92,7 +92,6 @@ export function App() {
                   : w.children.findIndex((w) => w.id === nearest.payload);
               w.children.splice(index + 1, 0, getNewWidget(item.type));
             }
-            console.log(array);
             setWidgets(array);
           }
         }
@@ -140,20 +139,91 @@ export function App() {
     graph.on("dragEnd", (e, start) => {
       const nearest = layout.current?.getNearest(e);
       if (nearest) {
-        console.log("dragEnd");
+        // 如果是往画布上拖入
         if (nearest.parentPayload === "canvas") {
           const widget = layout.current?.getWidget(start);
           if (widget) {
-            const array = [...widgets.filter((w) => w.id !== widget.payload)];
-            const index =
-              nearest.payload === null
-                ? -1
-                : array.findIndex((w) => w.id === nearest.payload);
-            array.splice(
-              index + 1,
-              0,
-              widgets.find((w) => w.id === widget.payload)!
+            const targetWidget = widgets.find((w) => w.id === widget.payload);
+            // 如果被拖动的组件在最外层画布上
+            if (targetWidget) {
+              const array = [...widgets.filter((w) => w.id !== widget.payload)];
+              const index =
+                nearest.payload === null
+                  ? -1
+                  : array.findIndex((w) => w.id === nearest.payload);
+              array.splice(index + 1, 0, targetWidget);
+              setWidgets(array);
+              setSelectRect([]);
+              setHoverRect(null);
+            } else {
+              const array = cloneDeep(widgets);
+              const parent = flatten(array.map((item) => item.children)).find(
+                (w) => w && w.children?.some((c) => c.id === widget.payload)
+              );
+              const w = parent?.children?.find((w) => w.id === widget.payload);
+              parent?.children &&
+                (parent.children = parent.children.filter(
+                  (w) => w.id !== widget.payload
+                ));
+              const index =
+                nearest.payload === null
+                  ? -1
+                  : array.findIndex((w) => w.id === nearest.payload);
+              w && array.splice(index + 1, 0, w);
+              setWidgets(array);
+              setSelectRect([]);
+              setHoverRect(null);
+            }
+          }
+        } else {
+          // 如果是往布局里拖入
+          const widget = layout.current?.getWidget(start);
+          if (widget) {
+            const array = cloneDeep(widgets);
+            const w = flatten(array.map((item) => item.children)).find(
+              (w) => w && w.id === nearest.parentPayload
             );
+            const targetWidget = array.find((w) => w.id === widget.payload);
+            if (!w) {
+              return;
+            }
+            // 如果是从画布中拖
+            if (targetWidget) {
+              if (w.type === "layout" && targetWidget.type === "layout") {
+                alert("抱歉，布局里面不能再拖入布局");
+                return;
+              }
+              !w.children && (w.children = []);
+              const index =
+                nearest.payload === null
+                  ? -1
+                  : w.children.findIndex((w) => w.id === nearest.payload);
+              w.children.splice(index + 1, 0, getNewWidget(targetWidget.type));
+
+              setWidgets(array.filter((w) => w.id !== widget.payload));
+            } else {
+              // 从布局中拖入布局中
+              const parent = flatten(array.map((item) => item.children)).find(
+                (w) => w && w.children?.some((c) => c.id === widget.payload)
+              );
+              const thisWidget = parent?.children?.find(
+                (w) => w.id === widget.payload
+              ); // 被拖动的组件
+              w.children ?? (w.children = []);
+              if (thisWidget && parent?.children && w.children) {
+                const index =
+                  nearest.payload === null
+                    ? -1
+                    : w.children.findIndex((w) => w.id === nearest.payload);
+                w.children.splice(index + 1, 0, getNewWidget(thisWidget.type));
+                parent?.children &&
+                  (parent.children = parent.children.filter(
+                    (w) => w.id !== widget.payload
+                  ));
+                console.log(parent);
+                console.log(w);
+              }
+            }
             setWidgets(array);
             setSelectRect([]);
             setHoverRect(null);
