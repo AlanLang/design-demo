@@ -18,7 +18,7 @@
 #### props 定义
 | 参数 | 类型 | 描述 |
 | --- | --- | --- |
-| type | `string|symbol` | 标识作用，用于和`useDroppable`关联|
+| type | `string 或 symbol` | 标识作用，用于和`useDroppable`关联|
 | payload | `any` | 携带的数据|
 | imageSource | `string` | 拖动时鼠标显示的图片 |
 
@@ -40,7 +40,7 @@ const connectDropTarget = useDroppable(canvasKey, {
 #### 接口定义
 | 参数 | 类型 | 描述 |
 | --- | --- | --- |
-| canvasKey | `string|symbol` | 和 `Draggable` 关联|
+| canvasKey | `string 或 symbol` | 和 `Draggable` 关联|
 
 onDrag
 当鼠标拖动过程中持续触发，item的内容为 `Draggable` 的 `payload`
