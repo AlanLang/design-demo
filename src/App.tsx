@@ -198,7 +198,7 @@ export function App() {
                 nearest.payload === null
                   ? -1
                   : w.children.findIndex((w) => w.id === nearest.payload);
-              w.children.splice(index + 1, 0, getNewWidget(targetWidget.type));
+              w.children.splice(index + 1, 0, targetWidget);
 
               setWidgets(array.filter((w) => w.id !== widget.payload));
             } else {
@@ -215,7 +215,7 @@ export function App() {
                   nearest.payload === null
                     ? -1
                     : w.children.findIndex((w) => w.id === nearest.payload);
-                w.children.splice(index + 1, 0, getNewWidget(thisWidget.type));
+                w.children.splice(index + 1, 0, thisWidget);
                 parent?.children &&
                   (parent.children = parent.children.filter(
                     (w) => w.id !== widget.payload
