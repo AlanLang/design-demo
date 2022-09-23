@@ -1,7 +1,7 @@
 import { BaseLayout, LayoutProps } from "./base";
 import { FlowLayout } from "./flow";
 
-export type { NearestResult, Widget } from "./base";
+export type { NearestResult, Widget, Position } from "./base";
 
 export class LayoutFactory<T> {
   private layouts = new Map<string, BaseLayout<T>>();
@@ -9,8 +9,8 @@ export class LayoutFactory<T> {
     this.layouts.set("flow", new FlowLayout(options));
   }
 
-  public register(name: string, layout: BaseLayout<T>) {
-    this.layouts.set(name, layout);
+  public register(name: string, layout: typeof BaseLayout<T>) {
+    this.layouts.set(name, new (layout as any)(this.options)); // TODO: 研究下这边类型该怎么写
   }
 
   public get(name: "flow"): FlowLayout<T>;
