@@ -2,11 +2,14 @@ import { cloneDeep, flatten } from "lodash-es";
 import * as React from "react";
 
 import { Canvas } from "./Canvas";
-import { Draggable } from "./design";
-import { useDroppable } from "./design/Draggable";
-import { Graph } from "./design/graph";
-import { Guideline } from "./design/Guideline";
-import { Layout, NearestResult } from "./design/layout";
+import {
+  Draggable,
+  useDroppable,
+  Graph,
+  Guideline,
+  Layout,
+  NearestResult,
+} from "./design";
 import { getInfoByPosition, Widget } from "./widget";
 import "./App.css";
 
