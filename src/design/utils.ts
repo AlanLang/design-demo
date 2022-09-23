@@ -1,12 +1,15 @@
-// 计算点到线段的最短距离
+/**
+ * 计算点到线段的最短距离
+ * @param point 点信息
+ * @param line 线段信息
+ * @returns 最短距离
+ */
 export function distanceOfPoint2LineSegment(
-  x1: number,
-  y1: number,
-  x2: number,
-  y2: number,
-  x: number,
-  y: number
-) {
+  point: { x: number; y: number },
+  line: { x1: number; y1: number; x2: number; y2: number }
+): number {
+  const { x1, y1, x2, y2 } = line;
+  const { x, y } = point;
   const cross = (x2 - x1) * (x - x1) + (y2 - y1) * (y - y1);
   if (cross <= 0) {
     return Math.sqrt((x - x1) * (x - x1) + (y - y1) * (y - y1));

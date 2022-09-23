@@ -169,14 +169,7 @@ export class FlowLayout<T> extends BaseLayout<T> {
         line: null,
       };
       lins.forEach((item) => {
-        const distance = distanceOfPoint2LineSegment(
-          item.x1,
-          item.y1,
-          item.x2,
-          item.y2,
-          e.x,
-          e.y
-        );
+        const distance = distanceOfPoint2LineSegment(e, item);
         if (distance < target.distance) {
           target.distance = distance;
           target.line = item;
