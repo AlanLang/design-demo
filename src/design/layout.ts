@@ -9,7 +9,7 @@ interface Position {
   y: number;
 }
 
-export interface LayerProps {
+export interface LayoutProps {
   getInfoByPosition: (e: Position) => Widget | undefined;
 }
 
@@ -24,10 +24,16 @@ export interface NearestResult<T> {
   }[];
 }
 
-export class Layout<T> {
-  private options: LayerProps;
-  public constructor(options: LayerProps) {
-    this.options = options;
+abstract class BaseLayout<T> {
+  public constructor(protected options: LayoutProps) {}
+
+  public abstract getNearest(e: Position): NearestResult<T> | null;
+  public abstract getWidget(e: Position): Widget | null;
+}
+
+export class Layout<T> extends BaseLayout<T> {
+  public constructor(options: LayoutProps) {
+    super(options);
   }
 
   /**

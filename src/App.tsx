@@ -136,7 +136,7 @@ export function App() {
         setNearest(result);
       }
     });
-    graph.on("dragEnd", (e, start) => {
+    graph.on("drop", (e, start) => {
       const nearest = layout.current?.getNearest(e);
       if (nearest) {
         // 如果是往画布上拖入
@@ -220,11 +220,9 @@ export function App() {
                   (parent.children = parent.children.filter(
                     (w) => w.id !== widget.payload
                   ));
-                console.log(parent);
-                console.log(w);
               }
+              setWidgets(array);
             }
-            setWidgets(array);
             setSelectRect([]);
             setHoverRect(null);
           }

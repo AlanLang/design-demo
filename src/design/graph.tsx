@@ -5,7 +5,7 @@ export type $Values<T extends object> = T[keyof T];
 const EVENT_KEYS = {
   CLICK: "click",
   DRAG: "drag",
-  DRAGEND: "dragEnd",
+  DROP: "drop",
   HOVER: "hover",
 } as const;
 
@@ -63,7 +63,7 @@ export class Graph {
     ) {
       this.events.emit(EVENT_KEYS.CLICK, e);
     } else {
-      this.events.emit(EVENT_KEYS.DRAGEND, e, this.mouseDownPosition);
+      this.events.emit(EVENT_KEYS.DROP, e, this.mouseDownPosition);
     }
     this.mouseDownPosition = null;
   };
