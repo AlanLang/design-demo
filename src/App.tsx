@@ -7,6 +7,7 @@ import {
   useDroppable,
   Graph,
   Guideline,
+  LayoutFactory,
   Layout,
   NearestResult,
 } from "./design";
@@ -105,11 +106,12 @@ export function App() {
   );
 
   React.useEffect(() => {
-    layout.current = new Layout({
+    const layoutFac = new LayoutFactory<string>({
       getInfoByPosition: (p) => {
         return getInfoByPosition(p);
       },
     });
+    layout.current = layoutFac.get("flow");
   }, [widgets]);
 
   React.useEffect(() => {

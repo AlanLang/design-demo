@@ -1,37 +1,10 @@
 import { flatten } from "lodash-es";
 
-import { distanceOfPoint2LineSegment } from "./utils";
+import { distanceOfPoint2LineSegment } from "../utils";
 
-import { Widget } from "./widget";
+import { BaseLayout, LayoutProps, NearestResult, Position } from "./base";
 
-interface Position {
-  x: number;
-  y: number;
-}
-
-export interface LayoutProps {
-  getInfoByPosition: (e: Position) => Widget | undefined;
-}
-
-export interface NearestResult<T> {
-  payload: T | null;
-  parentPayload: T | null;
-  guideLines: {
-    x1: number;
-    y1: number;
-    x2: number;
-    y2: number;
-  }[];
-}
-
-abstract class BaseLayout<T> {
-  public constructor(protected options: LayoutProps) {}
-
-  public abstract getNearest(e: Position): NearestResult<T> | null;
-  public abstract getWidget(e: Position): Widget | null;
-}
-
-export class Layout<T> extends BaseLayout<T> {
+export class FlowLayout<T> extends BaseLayout<T> {
   public constructor(options: LayoutProps) {
     super(options);
   }
