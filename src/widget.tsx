@@ -79,6 +79,8 @@ export function getInfoByPosition(p: { x: number; y: number }) {
     return {
       payload: targetId,
       position: targetDom.getBoundingClientRect(),
+      selectable: false,
+      draggable: false,
       children: Array.from(targetDom.children).map((item) => {
         return {
           payload: item.id,

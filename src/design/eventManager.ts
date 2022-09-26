@@ -9,7 +9,7 @@ const EVENT_KEYS = {
   HOVER: "hover",
 } as const;
 
-export class Graph {
+export class EventManager {
   private container: HTMLDivElement;
   private events: EventEmitter;
 

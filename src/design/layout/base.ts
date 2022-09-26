@@ -24,7 +24,29 @@ export abstract class BaseLayout<T> {
   public constructor(protected options: LayoutProps) {}
 
   public abstract getNearest(e: Position): NearestResult<T> | null;
-  public abstract getWidget(e: Position): Widget | null;
+  /**
+   * 获取当前位置的widget
+   */
+  public getWidget(e: Position) {
+    const info = this.options.getInfoByPosition(e);
+    if (!info) {
+      return null;
+    }
+    if (info.children && info.children.length > 0) {
+      return (
+        info.children.find((item) => {
+          const { position } = item;
+          return (
+            position.x <= e.x &&
+            position.y <= e.y &&
+            position.x + position.width >= e.x &&
+            position.y + position.height >= e.y
+          );
+        }) ?? info
+      );
+    }
+    return info;
+  }
 }
 
 export type { Widget };

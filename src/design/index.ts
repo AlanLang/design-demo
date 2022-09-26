@@ -1,6 +1,7 @@
 export { Draggable, useDroppable } from "./Draggable";
-export { Graph } from "./graph";
 export { Guideline } from "./Guideline";
-export { LayoutFactory, Layout } from "./layout";
+export { Layout, BaseLayout, FlowLayout } from "./layout";
+export { Transformable } from "./Transformable";
 export type { DraggableProps } from "./Draggable";
 export type { NearestResult, Position, Widget } from "./layout";
+export type { TransformableProps } from "./Transformable";

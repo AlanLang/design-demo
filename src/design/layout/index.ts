@@ -1,11 +1,12 @@
-import { BaseLayout, LayoutProps } from "./base";
+import { BaseLayout, LayoutProps, NearestResult, Position } from "./base";
 import { FlowLayout } from "./flow";
 
 export type { NearestResult, Widget, Position } from "./base";
 
-export class LayoutFactory<T> {
+export class Layout<T> extends BaseLayout<T> {
   private layouts = new Map<string, BaseLayout<T>>();
-  public constructor(private options: LayoutProps) {
+  public constructor(protected options: LayoutProps) {
+    super(options);
     this.layouts.set("flow", new FlowLayout(options));
   }
 
@@ -18,6 +19,14 @@ export class LayoutFactory<T> {
   public get(name: string) {
     return this.layouts.get(name);
   }
+
+  public getNearest(e: Position): NearestResult<T> | null {
+    const info = this.options.getInfoByPosition(e);
+    if (info && info.layout && this.layouts.has(info.layout)) {
+      return this.get(info.layout)!.getNearest(e);
+    }
+    return this.get("flow").getNearest(e);
+  }
 }
 
-export { BaseLayout as Layout };
+export { BaseLayout, FlowLayout };
