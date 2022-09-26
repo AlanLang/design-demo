@@ -40,9 +40,10 @@ export function Transformable<T>(props: TransformableProps<T>) {
       : null;
 
     events?.on("hover", (e) => {
-      const widget = layout.getWidget(e);
       setLines([]);
-      if (widget) {
+      const widget = layout.getWidget(e);
+      const selectable = widget?.selectable ?? true;
+      if (widget && selectable) {
         setHoverRect(widget.position);
         props.onHover?.(widget.payload, e);
       } else {
@@ -62,6 +63,8 @@ export function Transformable<T>(props: TransformableProps<T>) {
     });
 
     events?.on("drag", (e, start) => {
+      setHoverRect(null);
+      setSelectRect([]);
       const result = layout.getNearest(e);
       const widget = layout.getWidget(start);
       const selectable = widget?.draggable ?? true;
@@ -91,6 +94,8 @@ export function Transformable<T>(props: TransformableProps<T>) {
     accept || Symbol("transformable"),
     {
       onDrag(item, monitor) {
+        setHoverRect(null);
+        setSelectRect([]);
         const position = monitor.getClientOffset();
         if (position) {
           const result = layout.getNearest(position);
@@ -101,6 +106,9 @@ export function Transformable<T>(props: TransformableProps<T>) {
         }
       },
       onDrop(item: T, monitor) {
+        setLines([]);
+        setHoverRect(null);
+        setSelectRect([]);
         const position = monitor.getClientOffset();
         if (position) {
           const result = layout.getNearest(position);
