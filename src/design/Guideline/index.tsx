@@ -9,7 +9,7 @@ export interface GuidelineProps {
 export function Guideline(props: GuidelineProps) {
   const { lines, hoverRect, selectRect = [] } = props;
   return (
-    <div className="fvs-guideline-box">
+    <div className="fb-guideline-box">
       {lines.map((line, index) => (
         <div
           style={{
@@ -19,12 +19,12 @@ export function Guideline(props: GuidelineProps) {
             height: Math.max(Math.abs(line.y2 - line.y1), 2),
           }}
           key={index}
-          className="fvs-guideline-line"
+          className="fb-guideline-line"
         ></div>
       ))}
       {hoverRect ? (
         <div
-          className="fvs-guideline-hover"
+          className="fb-guideline-hover"
           style={{
             top: hoverRect.y,
             left: hoverRect.x,
@@ -36,7 +36,7 @@ export function Guideline(props: GuidelineProps) {
       {selectRect.map((rect, index) => (
         <div
           key={index}
-          className="fvs-guideline-selected"
+          className="fb-guideline-selected"
           style={{
             top: rect.y,
             left: rect.x,

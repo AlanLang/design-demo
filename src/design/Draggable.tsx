@@ -20,7 +20,7 @@ export function Draggable(props: DraggableProps) {
   }));
 
   return (
-    <div className="fvs-draggable" ref={drag}>
+    <div className="fb-draggable" ref={drag}>
       {imageSource ? (
         <DragPreviewImage connect={preview} src={imageSource} />
       ) : null}
