@@ -1,0 +1,52 @@
+@widget-list-title-height: 32px;
+.fb-widget-list-panel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    .widget-list-title {
+        height: @widget-list-title-height;
+        padding-left: 12px;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 32px;
+    }
+    .widget-list-content {
+        flex: 1;
+        background-color: white;
+        padding: 8px;
+        .fb-widget-item {
+            width: 100px;
+            position: relative;
+            display: inline-flex;
+            flex-direction: column;
+            margin: 3px;
+            cursor: pointer;
+            .fb-draggable {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+            }
+            .fb-widget-item-image {
+                width: 88px;
+                height: 56px;
+                box-sizing: content-box;
+                border: 1px solid transparent;
+                background-color: #f7fafc;
+                &:hover {
+                    border: 1px solid #4356ff;
+                }
+            }
+            .fb-widget-item-text {
+                overflow: hidden;
+                width: 100px;
+                height: 34px;
+                color: rgba(0, 0, 0, 0.65);
+                line-height: 17px;
+                text-align: center;
+                text-overflow: ellipsis;
+                white-space: pre-line;
+                font-size: 12px;
+            }
+        }
+    }
+}

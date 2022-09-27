@@ -9,14 +9,16 @@ export interface DraggableProps {
   children: React.ReactNode;
   imageSource?: string;
   payload?: unknown;
-  type: string | symbol;
+  dropTarget: string | symbol;
+  canDrag?: () => boolean;
 }
 
 export function Draggable(props: DraggableProps) {
-  const { children, imageSource, payload, type } = props;
+  const { children, imageSource, payload, dropTarget: type, canDrag } = props;
   const [, drag, preview] = useDrag(() => ({
     type,
     item: payload,
+    canDrag,
   }));
 
   return (

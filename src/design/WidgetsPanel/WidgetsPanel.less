@@ -1,0 +1,67 @@
+@widget-item-space: 12px;
+@widget-panel-box-shadow: 0px 9px 28px 8px rgba(0, 0, 0, 0.05),
+  0px 6px 16px 0px rgba(0, 0, 0, 0.08), 0px 3px 6px -4px rgba(0, 0, 0, 0.12);
+@secondary-background-color: #f7fafc;
+@widget-panel-border-radius: 8px;
+@widget-panel-box-shadow: 0px 9px 28px 8px rgba(0, 0, 0, 0.05),
+  0px 6px 16px 0px rgba(0, 0, 0, 0.08), 0px 3px 6px -4px rgba(0, 0, 0, 0.12);
+// Animation
+@animation-duration-slow: 0.3s;
+@widget-panel-slide-timing: cubic-bezier(0, 0, 0.58, 1);
+@widget-list-width: 232px;
+
+
+.rc-trigger-popup-hidden {
+  display: none;
+}
+
+.fb-widget-panel {
+  width: 100%;
+  overflow: hidden auto;
+  padding-top: @widget-item-space;
+  display: flex;
+  flex-direction: column;
+}
+
+.fb-widget-list-container {
+  position: fixed;
+  width: @widget-list-width;
+  bottom: 12px;
+  top: 12px;
+  background-color: @secondary-background-color;
+  border-radius: @widget-panel-border-radius;
+  box-shadow: @widget-panel-box-shadow;
+}
+
+
+.fb-widget-container-fade-in {
+  animation-duration: @animation-duration-slow;
+  animation-timing-function: @widget-panel-slide-timing;
+  &-appear,
+  &-enter {
+    animation-play-state: paused;
+    opacity: 0;
+    &-active {
+      animation-name: widgetListFadeIn;
+      animation-play-state: running;
+      opacity: 1;
+    }
+  }
+
+  &-leave {
+    animation-play-state: paused;
+    &-active {
+      animation-direction: reverse;
+      animation-name: widgetListFadeIn;
+      animation-play-state: running;
+    }
+  }
+}
+@keyframes widgetListFadeIn {
+  0% {
+    transform: translateX(-@widget-list-width);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}

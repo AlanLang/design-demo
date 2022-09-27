@@ -2,7 +2,13 @@ import { cloneDeep, flatten } from "lodash-es";
 import * as React from "react";
 
 import { Canvas } from "./Canvas";
-import { Draggable, Layout, NearestResult, Transformable } from "./design";
+import {
+  Draggable,
+  Layout,
+  NearestResult,
+  Transformable,
+  WidgetsPanel,
+} from "./design";
 import { getInfoByPosition, Widget } from "./widget";
 
 import "./App.css";
@@ -80,17 +86,48 @@ export function App() {
   return (
     <div className="design">
       <div className="widget-list">
+        <WidgetsPanel
+          dropTarget={canvasKey}
+          entry={[
+            { text: "控件", payload: "controller" },
+            { text: "布局", payload: "layout" },
+          ]}
+          widgetFetcher={(entry) => {
+            if (entry.payload === "layout") {
+              return Promise.resolve([
+                { text: "布局", payload: { type: "layout" } },
+              ]);
+            }
+            return Promise.resolve([
+              {
+                text: "文字",
+                payload: { type: "text" },
+                node: (
+                  <img
+                    style={{ width: 88 }}
+                    src="https://vip2.loli.io/2022/09/27/QcPxD8LpX9fRCJa.png"
+                  ></img>
+                ),
+              },
+              {
+                text: "标题",
+                payload: { type: "title" },
+                node: "https://vip2.loli.io/2022/09/27/QcPxD8LpX9fRCJa.png",
+              },
+            ]);
+          }}
+        />
         <Draggable
-          type={canvasKey}
+          dropTarget={canvasKey}
           payload={{ type: "text" }}
           imageSource="https://vip2.loli.io/2022/09/21/FjvO9GAZyawgxlr.jpg"
         >
           <div className="widget-item">文字</div>
         </Draggable>
-        <Draggable type={canvasKey} payload={{ type: "title" }}>
+        <Draggable dropTarget={canvasKey} payload={{ type: "title" }}>
           <div className="widget-item">标题</div>
         </Draggable>
-        <Draggable type={canvasKey} payload={{ type: "layout" }}>
+        <Draggable dropTarget={canvasKey} payload={{ type: "layout" }}>
           <div className="widget-item">布局</div>
         </Draggable>
       </div>

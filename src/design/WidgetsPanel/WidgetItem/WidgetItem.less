@@ -1,0 +1,34 @@
+@primary-color: #4356ff;
+
+.fb-widget-panel-item {
+    display: flex;
+    cursor: pointer;
+    padding: 12px;
+    color: rgba(0, 0, 0, 0.65);
+    position: relative;
+    
+    .item-text {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        font-size: 14px;
+        padding: 0 0 0 8px;
+    }
+    &:hover {
+        background-color: rgba(67, 86, 255, 0.05);
+        color: @primary-color;
+    }
+
+    &.selected {
+        background-color: fade(@primary-color, 10%);
+        &::before {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          width: 2px;
+          background-color: @primary-color;
+          content: "";
+        }
+      }
+}

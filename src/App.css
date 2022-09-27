@@ -19,6 +19,9 @@ body {
   align-items: center;
   padding-top: 24px;
   flex-shrink: 0;
+  position: relative;
+  z-index: 100;
+  background: white;
 }
 
 .widget-item {
@@ -26,7 +29,6 @@ body {
   height: 100px;
   width: 100px;
   border: 1px solid black;
-  margin-top: 12px;
   cursor: move;
   user-select: none;
 }

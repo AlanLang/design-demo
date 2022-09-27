@@ -5,3 +5,5 @@ export { Transformable } from "./Transformable";
 export type { DraggableProps } from "./Draggable";
 export type { NearestResult, Position, Widget } from "./layout";
 export type { TransformableProps } from "./Transformable";
+
+export * from "./WidgetsPanel";
