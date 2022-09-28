@@ -41,8 +41,8 @@ export function App() {
 
   const layout = React.useMemo(() => {
     const lay = new Layout<string>({
-      getInfoByPosition: (p) => {
-        return getInfoByPosition(p);
+      getInfoByPosition: (e) => {
+        return getInfoByPosition(e);
       },
     });
     return lay;

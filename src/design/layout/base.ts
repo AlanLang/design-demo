@@ -1,12 +1,9 @@
 import { Widget } from "../widget";
 
-export interface Position {
-  x: number;
-  y: number;
-}
+export type Event = MouseEvent | DragEvent;
 
 export interface LayoutProps {
-  getInfoByPosition: (e: Position) => Widget | undefined;
+  getInfoByPosition: (e: Event) => Widget | undefined;
 }
 
 export interface NearestResult<T> {
@@ -23,11 +20,11 @@ export interface NearestResult<T> {
 export abstract class BaseLayout<T> {
   public constructor(protected options: LayoutProps) {}
 
-  public abstract getNearest(e: Position): NearestResult<T> | null;
+  public abstract getNearest(e: Event): NearestResult<T> | null;
   /**
    * 获取当前位置的widget
    */
-  public getWidget(e: Position) {
+  public getWidget(e: Event) {
     const info = this.options.getInfoByPosition(e);
     if (!info) {
       return null;

@@ -7,13 +7,14 @@ const EVENT_KEYS = {
   DRAG: "drag",
   DROP: "drop",
   HOVER: "hover",
+  DRAGOVER: "dragover",
 } as const;
 
 export class EventManager {
   private container: HTMLDivElement;
   private events: EventEmitter;
 
-  private mouseDownPosition: { x: number; y: number } | null = null;
+  private mouseDownPosition: MouseEvent | null = null;
 
   public constructor(container: HTMLDivElement) {
     this.container = container;
@@ -26,11 +27,12 @@ export class EventManager {
     this.container.addEventListener("mousedown", this.onMouseDown);
     this.container.addEventListener("mouseup", this.onMouseUp);
     this.container.addEventListener("mouseleave", this.onMouseOut);
+    this.container.addEventListener("dragover", this.onDragOver);
   }
 
   public on(
     event: $Values<typeof EVENT_KEYS>,
-    listener: (e: MouseEvent, start: { x: number; y: number }) => void
+    listener: (e: MouseEvent, start: MouseEvent) => void
   ) {
     this.events.on(event, listener);
   }
@@ -40,6 +42,7 @@ export class EventManager {
     this.container.removeEventListener("mousedown", this.onMouseDown);
     this.container.removeEventListener("mouseup", this.onMouseUp);
     this.container.removeEventListener("mouseleave", this.onMouseOut);
+    this.container.removeEventListener("dragover", this.onDragOver);
     this.events.removeAllListeners();
   }
 
@@ -71,5 +74,9 @@ export class EventManager {
   private onMouseOut = (e: MouseEvent) => {
     this.onMouseMove(e);
     // this.mouseDownPosition = null;
+  };
+
+  private onDragOver = (e: DragEvent) => {
+    this.events.emit(EVENT_KEYS.DRAGOVER, e);
   };
 }

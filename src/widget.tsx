@@ -49,7 +49,7 @@ export function RenderWidgets({ widgets }: { widgets: Widget[] }) {
   );
 }
 
-export function getInfoByPosition(p: { x: number; y: number }) {
+export function getInfoByPosition(p: MouseEvent | DragEvent) {
   const doms = document.getElementsByClassName("widget");
   const domIds = Array.from(doms)
     .filter((item) => {

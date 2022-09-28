@@ -2,7 +2,7 @@ import { flatten } from "lodash-es";
 
 import { distanceOfPoint2LineSegment } from "../utils";
 
-import { BaseLayout, LayoutProps, NearestResult, Position } from "./base";
+import { BaseLayout, LayoutProps, NearestResult, Event } from "./base";
 
 export class FlowLayout<T> extends BaseLayout<T> {
   public constructor(options: LayoutProps) {
@@ -12,7 +12,7 @@ export class FlowLayout<T> extends BaseLayout<T> {
   /**
    * 获取即将拖入的信息
    */
-  public getNearest(e: Position): NearestResult<T> | null {
+  public getNearest(e: Event): NearestResult<T> | null {
     const info = this.options.getInfoByPosition(e);
     if (!info) {
       return null;
@@ -85,7 +85,7 @@ export class FlowLayout<T> extends BaseLayout<T> {
     };
   }
 
-  public generateGuideLine(e: Position) {
+  public generateGuideLine(e: Event) {
     const info = this.options.getInfoByPosition(e);
     if (!info) {
       return null;

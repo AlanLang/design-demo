@@ -1,7 +1,7 @@
-import { BaseLayout, LayoutProps, NearestResult, Position } from "./base";
+import { BaseLayout, LayoutProps, NearestResult, Event } from "./base";
 import { FlowLayout } from "./flow";
 
-export type { NearestResult, Widget, Position } from "./base";
+export type { NearestResult, Widget, Event as Position } from "./base";
 
 export class Layout<T> extends BaseLayout<T> {
   private layouts = new Map<string, BaseLayout<T>>();
@@ -20,7 +20,7 @@ export class Layout<T> extends BaseLayout<T> {
     return this.layouts.get(name);
   }
 
-  public getNearest(e: Position): NearestResult<T> | null {
+  public getNearest(e: Event): NearestResult<T> | null {
     const info = this.options.getInfoByPosition(e);
     if (info && info.layout && this.layouts.has(info.layout)) {
       return this.get(info.layout)!.getNearest(e);

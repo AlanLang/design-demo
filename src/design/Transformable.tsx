@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useDroppable } from "./Draggable";
 
@@ -33,6 +33,7 @@ export function Transformable<T>(props: TransformableProps<T>) {
   const [selectRect, setSelectRect] = useState<GuidelineProps["selectRect"]>(
     []
   );
+  const mouseOver = useRef<MouseEvent | null>(null);
 
   useEffect(() => {
     const events = dragContainerRef.current
@@ -85,6 +86,10 @@ export function Transformable<T>(props: TransformableProps<T>) {
       }
     });
 
+    events?.on("dragover", (e) => {
+      mouseOver.current = e;
+    });
+
     return () => {
       events?.destroy();
     };
@@ -93,27 +98,26 @@ export function Transformable<T>(props: TransformableProps<T>) {
   const connectDropTarget = useDroppable(
     accept || Symbol("transformable"),
     {
-      onDrag(item, monitor) {
+      onDrag(item) {
         setHoverRect(null);
         setSelectRect([]);
-        const position = monitor.getClientOffset();
-        if (position) {
-          const result = layout.getNearest(position);
+        if (mouseOver.current) {
+          const result = layout.getNearest(mouseOver.current);
           if (result) {
             setLines(result.guideLines);
-            props.onDrag?.(item, result, monitor as any);
+            props.onDrag?.(item, result, mouseOver.current);
           }
         }
       },
-      onDrop(item: T, monitor) {
+      onDrop(item: T) {
         setLines([]);
         setHoverRect(null);
         setSelectRect([]);
-        const position = monitor.getClientOffset();
-        if (position) {
-          const result = layout.getNearest(position);
+        if (mouseOver.current) {
+          console.log(mouseOver.current);
+          const result = layout.getNearest(mouseOver.current);
           if (result) {
-            props.onDropAdd?.(item, result, position);
+            props.onDropAdd?.(item, result, mouseOver.current);
           }
         }
       },
