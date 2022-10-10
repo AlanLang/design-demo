@@ -125,7 +125,9 @@ export function Guideline(props: GuidelineProps) {
           }}
         >
           <div
-            className={classNames('fb-guideline-toolbar', { 'toolbar-top-left': !toolbarOutView })}
+            className={classNames('fb-guideline-toolbar', {
+              'toolbar-top-left': !toolbarOutView,
+            })}
             ref={toolbarRef}
           >
             {toolbar}

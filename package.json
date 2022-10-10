@@ -16,7 +16,7 @@
     "test": "umi-test",
     "test:coverage": "umi-test --coverage",
     "prepublishOnly": "npm run build",
-    "tsc":"tsc --noEmit"
+    "tsc": "tsc --noEmit"
   },
   "files": [
     "dist"
@@ -46,6 +46,7 @@
     "@types/events": "^3.0.0",
     "@types/jest": "^27.0.3",
     "@types/lodash-es": "^4.17.6",
+    "@types/styled-components": "^5.1.26",
     "@umijs/fabric": "^2.8.1",
     "@umijs/test": "^3.0.5",
     "dumi": "^1.1.0",
@@ -54,6 +55,7 @@
     "gh-pages": "^3.0.0",
     "lint-staged": "^10.0.7",
     "prettier": "^2.7.1",
+    "styled-components": "^5.3.6",
     "stylelint": "^14.9.1",
     "stylelint-config-idiomatic-order": "^8.1.0",
     "stylelint-config-prettier": "^9.0.3",
