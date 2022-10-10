@@ -1,12 +1,11 @@
 {
   "root": true,
-  "plugins": [
-    "stylelint-order"
-  ],
+  "plugins": ["stylelint-order"],
   "extends": [
     "stylelint-config-standard",
     "stylelint-prettier/recommended",
-    "stylelint-config-idiomatic-order"
+    "stylelint-config-idiomatic-order",
+    "stylelint-config-prettier"
   ],
   "rules": {
     "rule-empty-line-before": null,
@@ -14,9 +13,7 @@
     "function-no-unknown": [
       true,
       {
-        "ignoreFunctions": [
-          "fade"
-        ]
+        "ignoreFunctions": ["fade"]
       }
     ],
     "color-function-notation": null,

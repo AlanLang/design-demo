@@ -188,7 +188,7 @@ function TransformableView<T>(props: TransformableProps<T>, ref: Ref<Transformab
 
 type ITransformable = <T>(
   props: TransformableProps<T> & {
-    ref?: React.MutableRefObject<TransformableAction | null>;
+    ref?: MutableRefObject<TransformableAction | null>;
   },
 ) => JSX.Element;
-export const Transformable: ITransformable = forwardRef(TransformableView) as any;
+export const Transformable: ITransformable = forwardRef(TransformableView) as ITransformable;

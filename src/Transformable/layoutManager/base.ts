@@ -67,6 +67,9 @@ export abstract class BaseLayout<T> {
     if (!info) {
       return null;
     }
+    if (info.isTarget) {
+      return info;
+    }
     if (info.children && info.children.length > 0) {
       return info.children.find((item) => {
         return item.isTarget === true;
