@@ -1,0 +1,46 @@
+@guideline-color: #4356ff;
+
+.fb-guideline-box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+
+  .fb-guideline-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 1px;
+    background-color: @guideline-color;
+    transform-origin: 0 50%;
+    will-change: transform;
+  }
+  .fb-guideline-hover {
+    position: absolute;
+    box-sizing: border-box;
+    border: 1px dotted @guideline-color;
+    border-radius: 2px;
+    pointer-events: none;
+  }
+
+  .fb-guideline-selected {
+    position: absolute;
+    box-sizing: border-box;
+    border: 2px solid @guideline-color;
+    border-radius: 2px;
+    pointer-events: none;
+  }
+  .fb-guideline-toolbar {
+    position: absolute;
+    padding: 4px;
+    background-color: @guideline-color;
+    color: white;
+    font-size: 12px;
+    &.toolbar-top-left {
+      bottom: calc(100% + 2px);
+      left: -2px;
+    }
+  }
+}

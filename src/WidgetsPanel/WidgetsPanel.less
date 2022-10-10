@@ -1,0 +1,67 @@
+@widget-item-space: 12px;
+@widget-panel-box-shadow: 0px 9px 28px 8px rgba(0, 0, 0, 0.05), 0px 6px 16px 0px rgba(0, 0, 0, 0.08),
+  0px 3px 6px -4px rgba(0, 0, 0, 0.12);
+// Animation
+@animation-duration-slow: 0.3s;
+@widget-panel-slide-timing: cubic-bezier(0, 0, 0.58, 1);
+@widget-list-width: 232px;
+
+.rc-trigger-popup-hidden {
+  display: none;
+}
+
+.fb-widget-panel {
+  position: relative;
+  width: 100%;
+  .fb-widget-list {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+  }
+  .fb-widget-entry {
+    position: relative;
+    display: flex;
+    overflow: hidden auto;
+    flex-direction: column;
+    padding-top: @widget-item-space;
+  }
+}
+
+.fb-widget-list-container {
+  position: absolute;
+  top: 12px;
+  bottom: 12px;
+  width: @widget-list-width;
+}
+
+.fb-widget-container-fade-in {
+  animation-duration: @animation-duration-slow;
+  animation-timing-function: @widget-panel-slide-timing;
+  &-appear,
+  &-enter {
+    animation-play-state: paused;
+    opacity: 0;
+    &-active {
+      animation-name: widgetListFadeIn;
+      animation-play-state: running;
+      opacity: 1;
+    }
+  }
+
+  &-leave {
+    animation-play-state: paused;
+    &-active {
+      animation-direction: reverse;
+      animation-name: widgetListFadeIn;
+      animation-play-state: running;
+    }
+  }
+}
+@keyframes widgetListFadeIn {
+  0% {
+    transform: translateX(-@widget-list-width);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
