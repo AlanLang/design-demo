@@ -1,18 +1,43 @@
 export interface Widget {
+  /**
+   * @description 组件携带的数据信息
+   */
   payload: any;
+  /**
+   * @description 组件相对于屏幕的绝对位置
+   */
   position: {
     x: number;
     y: number;
     width: number;
     height: number;
   };
+  /**
+   * @description 是否是当前鼠标下需要操作的组件
+   */
   isTarget: boolean;
-  layout?: 'string';
+  /**
+   * @description 组件的布局方式
+   */
+  layout?: string;
+  /**
+   * @description 是否可以调整大小
+   */
   resizable?: 'horizontal' | 'vertical' | 'both' | 'none';
+  /**
+   * @description 是否可以被拖拽
+   */
   draggable?: boolean;
+  /**
+   * @description 是否可以被选中
+   */
   selectable?: boolean;
+  /**
+   * @description 子组件列表
+   */
   children?: Widget[];
 }
+
 export type Event = MouseEvent | DragEvent;
 
 export interface LayoutProps {

@@ -55,7 +55,6 @@
     "gh-pages": "^3.0.0",
     "lint-staged": "^10.0.7",
     "prettier": "^2.7.1",
-    "styled-components": "^5.3.6",
     "stylelint": "^14.9.1",
     "stylelint-config-idiomatic-order": "^8.1.0",
     "stylelint-config-prettier": "^9.0.3",

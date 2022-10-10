@@ -124,14 +124,16 @@ export function Guideline(props: GuidelineProps) {
             height: rect.height,
           }}
         >
-          <div
-            className={classNames('fb-guideline-toolbar', {
-              'toolbar-top-left': !toolbarOutView,
-            })}
-            ref={toolbarRef}
-          >
-            {toolbar}
-          </div>
+          {toolbar ? (
+            <div
+              className={classNames('fb-guideline-toolbar', {
+                'toolbar-top-left': !toolbarOutView,
+              })}
+              ref={toolbarRef}
+            >
+              {toolbar}
+            </div>
+          ) : null}
         </div>
       ))}
     </div>

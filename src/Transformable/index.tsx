@@ -8,13 +8,14 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import styled from 'styled-components';
 
 import { useDroppable } from '../Draggable';
 import { Guideline, GuidelineProps } from '../Guideline';
 
 import { EventManager } from './eventManager';
 import { Layout, NearestResult } from './layoutManager';
+
+import './index.less';
 
 export interface TransformableAction {
   /**
@@ -72,13 +73,6 @@ export interface TransformableProps<T> {
 export interface ClickActions {
   renderToolbar: (node: ReactNode) => void;
 }
-
-const TransformableContainer = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  user-select: none;
-`;
 
 function TransformableView<T>(props: TransformableProps<T>, ref: Ref<TransformableAction>) {
   const { dragContainerRef, layout, accept } = props;
@@ -186,9 +180,9 @@ function TransformableView<T>(props: TransformableProps<T>, ref: Ref<Transformab
   connectDropTarget(dragContainerRef.current);
 
   return (
-    <TransformableContainer>
+    <div className="fb-transformable">
       <Guideline lines={lines} hoverRect={hoverRect} selectRect={selectRect} toolbar={toolbar} />
-    </TransformableContainer>
+    </div>
   );
 }
 
