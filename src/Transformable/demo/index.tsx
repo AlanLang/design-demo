@@ -158,9 +158,9 @@ function App() {
             layout={layout}
             onDropAdd={createWidgets}
             cursor={`url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' width='8px' height='8px'><circle cx='4' cy='4' r='4' opacity='.5'/></svg>"), auto`}
-            // onClick={(_, actions) => {
-            //   // actions.renderToolbar(<Toolbar title="组件名称" />);
-            // }}
+            onClick={(_, actions) => {
+              actions.renderToolbar(<Toolbar title="组件名称" />);
+            }}
             onDrop={(payload, nearest) => {
               console.log(payload, nearest);
               if (nearest) {
